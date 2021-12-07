@@ -1,0 +1,21 @@
+{
+  "name": "@technologiestiftung/stadtpuls-supabase-definitions",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "stadtpuls",
+    "supabase",
+    "definitions",
+    "technologiestiftung"
+  ],
+  "author": "Fabian Morón Zirfas <fabianmoronzirfas@protonmail.ch> (https://fabianmoronzirfas.me)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "16.11.12",
+    "@types/yargs": "17.0.7",
+    "openapi-typescript": "4.4.0",
+    "ts-node": "10.4.0",
+    "typescript": "4.5.2",
+    "yargs": "17.3.0"
+  }
+}
