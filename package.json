@@ -9,7 +9,7 @@
     "build": "tsc",
     "dev": "ts-node src/cli.ts",
     "create": "ts-node src/cli.ts create",
-    "prepare": "npm run create && npm run build"
+    "prepare": "npm run build"
   },
   "keywords": [
     "stadtpuls",
