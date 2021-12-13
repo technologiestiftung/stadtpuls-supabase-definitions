@@ -35,7 +35,7 @@ const parser = yargs(process.argv.slice(2))
       const url = new URL(`${supabaseUrl}/rest/v1/?apikey=${anonKey}`);
       const output = await openapiTS(url.toString());
       fs.writeFile(
-        path.resolve(process.cwd(), "./index.d.ts"),
+        path.resolve(process.cwd(), "./generated.d.ts"),
         output,
         "utf8",
         (err) => {
