@@ -10,7 +10,7 @@ export interface definitions extends Omit<generatedDefinitions, 'records' | 'ext
     categories: number[];
     sensors: number[];
   };
-  records: Omit<generatedDefinitions['categories'], 'name'> & {
+  categories: Omit<generatedDefinitions['categories'], 'name'> & {
     name:
       | "Temperatur"
       | "CO2"
