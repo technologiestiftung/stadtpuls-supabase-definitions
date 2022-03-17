@@ -6,7 +6,7 @@
     "stadtpuls-definitions": "dist/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "dev": "ts-node src/cli.ts",
     "create": "ts-node src/cli.ts create",
     "prepare": "npm run build"
