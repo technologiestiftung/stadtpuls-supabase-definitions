@@ -1,6 +1,6 @@
 {
   "name": "@technologiestiftung/stadtpuls-supabase-definitions",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "",
   "bin": {
     "stadtpuls-definitions": "dist/cli.js"
