@@ -1,0 +1,76 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI Test and release
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Checkout technologiestiftung/stadtpuls-supabase#staging
+        uses: actions/checkout@v3
+        # check the supabase setup for staging
+        if: github.event.pull_request.base.ref == 'staging' || github.ref == 'refs/heads/staging'
+        with:
+          repository: technologiestiftung/stadtpuls-supabase
+          path: supabase
+          ref: staging
+      - name: Checkout technologiestiftung/stadtpuls-supabase#main
+        uses: actions/checkout@v3
+        # check the supabase setup for main
+        if: github.event.pull_request.base.ref == 'main' || github.ref == 'refs/heads/main'
+        with:
+          repository: technologiestiftung/stadtpuls-supabase
+          path: supabase
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Run supabase
+        run: docker-compose --env-file supabase/supabase-docker-compose/.env.example --file supabase/supabase-docker-compose/docker-compose.yml up --detach --build --force-recreate
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm run create --if-present
+  #    - run: npm test
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    needs:
+      - build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "lts/*"
+      - name: Install dependencies
+        run: npm ci
+      - name: Release
+        env:
+          GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+        run: npx semantic-release

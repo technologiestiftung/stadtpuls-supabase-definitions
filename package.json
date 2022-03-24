@@ -1,12 +1,12 @@
 {
   "name": "@technologiestiftung/stadtpuls-supabase-definitions",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "",
   "bin": {
     "stadtpuls-definitions": "dist/cli.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc -p tsconfig.json",
     "dev": "ts-node src/cli.ts",
     "create": "ts-node src/cli.ts create",
     "prepare": "npm run build"
@@ -20,9 +20,16 @@
   "author": "Fabian Morón Zirfas <fabianmoronzirfas@protonmail.ch> (https://fabianmoronzirfas.me)",
   "license": "MIT",
   "devDependencies": {
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/commit-analyzer": "9.0.2",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/github": "8.0.2",
+    "@semantic-release/npm": "9.0.0",
+    "@semantic-release/release-notes-generator": "10.0.3",
     "@types/node": "16.11.12",
     "@types/yargs": "17.0.7",
     "openapi-typescript": "4.4.0",
+    "semantic-release": "19.0.2",
     "ts-node": "10.4.0",
     "typescript": "4.5.2",
     "yargs": "17.3.0"
